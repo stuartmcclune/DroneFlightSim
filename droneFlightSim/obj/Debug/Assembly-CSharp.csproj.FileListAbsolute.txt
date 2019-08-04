@@ -1,0 +1,2 @@
+C:\Users\Stuart\droneFlightSim\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Stuart\droneFlightSim\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
