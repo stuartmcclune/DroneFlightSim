@@ -477,9 +477,15 @@ MonoBehaviour:
   MotorBR: {fileID: 178363776}
   Target: {fileID: 170067489}
   TargetYaw: 0
-  Kp: 0.8
-  Ki: 0
-  Kd: 2.8
+  KpDist: 0.8
+  KiDist: 0
+  KdDist: 2.8
+  KpAngle: 1
+  KiAngle: 2
+  KdAngle: 5
+  KpYaw: 0.2
+  KiYaw: 0
+  KdYaw: 4
   MaxForce: 8
   Body: {fileID: 661434912}
 --- !u!114 &661434911

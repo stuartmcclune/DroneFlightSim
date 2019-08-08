@@ -10,10 +10,16 @@ public class FlightControllerLocal : MonoBehaviour
     public Target Target;
     //public Vector3 Target;
     public float TargetYaw;
-    public float Kp = 1;
-    public float Ki = 1;
-    public float Kd = 1;
-    public float MaxForce = 20;
+    public float KpDist = 0.8f;
+    public float KiDist = 0;
+    public float KdDist = 2.8f;
+    public float KpAngle = 1;
+    public float KiAngle = 2;
+    public float KdAngle = 5;
+    public float KpYaw = 1;
+    public float KiYaw = 1;
+    public float KdYaw = 1;
+    public float MaxForce = 8;
 
     public Rigidbody Body;
 
@@ -72,7 +78,7 @@ public class FlightControllerLocal : MonoBehaviour
         float derivativeY = (errorY - prevErrorY) / Time.fixedDeltaTime;
         float momentumY = Body.velocity.y * Body.mass;
 
-        float pidOutY = Kp * errorY + Ki * integralY + Kd * derivativeY;
+        float pidOutY = KpDist * errorY + KiDist * integralY + KdDist * derivativeY;
 
         prevErrorY = errorY;
 
@@ -87,7 +93,7 @@ public class FlightControllerLocal : MonoBehaviour
         float derivativeZ = (errorZ - prevErrorZ) / Time.fixedDeltaTime;
         float momentumZ = Body.velocity.z * Body.mass;
 
-        float pidOutZ = Kp * errorZ + Ki * integralZ + Kd * derivativeZ;
+        float pidOutZ = KpDist * errorZ + KiDist * integralZ + KdDist * derivativeZ;
 
         prevErrorZ = errorZ;
 
@@ -103,7 +109,7 @@ public class FlightControllerLocal : MonoBehaviour
         float derivativeX = (errorX - prevErrorX) / Time.fixedDeltaTime;
         float momentumX = Body.velocity.x * Body.mass;
 
-        float pidOutX = Kp * errorX + Ki * integralX + Kd * derivativeX;
+        float pidOutX = KpDist * errorX + KiDist * integralX + KdDist * derivativeX;
 
         prevErrorX = errorX;
 
@@ -119,7 +125,7 @@ public class FlightControllerLocal : MonoBehaviour
         float derivativePitch = (error - prevErrorPitch) / Time.fixedDeltaTime;
         float angularMomentum = Body.inertiaTensor.x * Body.angularVelocity.x;
 
-        float pidOut = Kp * error + Ki * integralPitch + Kd * derivativePitch;
+        float pidOut = KpAngle * error + KiAngle * integralPitch + KdAngle * derivativePitch;
 
         prevErrorPitch = error;
 
@@ -135,7 +141,7 @@ public class FlightControllerLocal : MonoBehaviour
         float derivativeRoll = (error - prevErrorRoll) / Time.fixedDeltaTime;
         float angularMomentum = Body.inertiaTensor.z * Body.angularVelocity.z;
 
-        float pidOut = Kp * error + Ki * integralRoll + Kd * derivativeRoll;
+        float pidOut = KpAngle * error + KiAngle * integralRoll + KdAngle * derivativeRoll;
 
         prevErrorRoll = error;
 
@@ -156,7 +162,7 @@ public class FlightControllerLocal : MonoBehaviour
         float derivativeYaw = (error - prevErrorYaw) / Time.fixedDeltaTime;
         float angularMomentum = Body.inertiaTensor.y * Body.angularVelocity.y;
 
-        float pidOut = Kp * error + Ki * integralYaw + Kd * derivativeYaw;
+        float pidOut = KpYaw * error + KiYaw * integralYaw + KdYaw * derivativeYaw;
         prevErrorYaw = error;
 
         float torque = (Body.inertiaTensor.y * pidOut - angularMomentum) / 40;
