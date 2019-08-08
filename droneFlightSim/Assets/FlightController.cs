@@ -41,7 +41,6 @@ public class FlightController : MonoBehaviour
     {
 
         float forceY = getForceY();
-        Debug.Log(forceY);
         float forceZ = getForceZ();
         float forceX = getForceX();
 
@@ -49,13 +48,12 @@ public class FlightController : MonoBehaviour
         //currently keeps yaw at 0.
         float yaw = getYaw();
         
-        //Bug: if forces are too great, causes wrong rotation. Need to clamp resultant first... carefully. Maybe clamp (global) Y, then use rest of power between X,Z.
+        //Bug: if forces are too great, causes wrong rotation. Need to clamp resultant first... carefully. Maybe clamp (global) Y, then use rest of power between X,Z. Maybe add gravity after getForceY() too.
         float pitch = getPitch(forceZ, forceY);
         
         float roll = getRoll(forceX, forceY);
 
         //TODO: system to ensure drone will NEVER hit objects e.g. floor. Needs to limit velocity in a given direction given distance to obstacle s.t. force to avoid is always possible. Multiple directions must be considered.
-        //TODO: fix flying down with negative forceY - might be bigger issue with all negative forces.
         
         float force = fly(forceY);
 
@@ -116,7 +114,7 @@ public class FlightController : MonoBehaviour
 
     private float getPitch(float forceZ, float forceY)
     {
-        float pitchTarget = Mathf.Atan2(forceZ, forceY);
+        float pitchTarget = Mathf.Atan2(forceZ, Mathf.Abs(forceY));
 
         float error = pitchTarget - Mathf.Atan2(transform.up.z, transform.up.y);
         
@@ -134,10 +132,10 @@ public class FlightController : MonoBehaviour
 
     private float getRoll(float forceX, float forceY)
     {
-        float rollTarget = Mathf.Atan2(forceX, forceY);
+        float rollTarget = Mathf.Atan2(forceX, Mathf.Abs(forceY));
 
         float error = rollTarget - Mathf.Atan2(transform.up.x, transform.up.y);
-
+  
         integralRoll += error * Time.fixedDeltaTime;
         float derivativeRoll = (error - prevErrorRoll) / Time.fixedDeltaTime;
         float angularMomentum = Body.inertiaTensor.z * Body.angularVelocity.z;
