@@ -7,6 +7,13 @@ public class FlightControllerLocal : MonoBehaviour
     public Motor MotorBL;
     public Motor MotorBR;
 
+    public LaserRangeSensor LaserRangeSensorX;
+    public LaserRangeSensor LaserRangeSensorNX;
+    public LaserRangeSensor LaserRangeSensorY;
+    public LaserRangeSensor LaserRangeSensoNY;
+    public LaserRangeSensor LaserRangeSensorZ;
+    public LaserRangeSensor LaserRangeSensorNZ;
+
     public Target Target;
     //public Vector3 Target;
     public float TargetYaw;
@@ -43,6 +50,7 @@ public class FlightControllerLocal : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(LaserRangeSensorZ.GetDistance());
 
         float forceY = getForceY();
         float forceZ = getForceZ();
